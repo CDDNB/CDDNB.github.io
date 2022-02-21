@@ -10,7 +10,7 @@ function adjust_screen(){
     canvas = document.getElementById("wrapper");
     canvas.width = 1920
     canvas.height = 1080
-    if(document.documentElement.clientWidth <= document.documentElement.clientHeight){
+    if(document.documentElement.clientWidth == document.documentElement.clientHeight){
         //text.set({x:570, y:190, rotation:90});
         canvas.width = 1080;
         canvas.height = 1920;
