@@ -249,8 +249,8 @@ function state1_end() {
     container.addChild(bg);
     createjs.Tween.get(container).to({alpha:0}, 1000).to({alpha:1}, 1000);
     things[0].removeEventListener("click", ticket2_handler);
-    things[0].removeEventListener("pressmove", ticket2_move);
-    things[0].removeEventListener("pressup", ticket2_end);
+    things[0].removeEventListener("touchmove", ticket2_move);
+    things[0].removeEventListener("touchup", ticket2_end);
     things[1].removeEventListener("click", ticket1_handler);
     things[1].removeEventListener("pressmove", ticket1_move);
     things[1].removeEventListener("pressup", ticket1_end);
