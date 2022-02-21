@@ -10,10 +10,11 @@ function adjust_screen(){
     canvas.width = 1920
     canvas.height = 1080
     if(document.documentElement.clientWidth <= document.documentElement.clientHeight){
+        //text.set({x:570, y:190, rotation:90});
         canvas.width = 1080;
         canvas.height = 1920;
-        container.rotation = container_indoor.rotation = container_outdoor.rotation = 90;
-        container.x = container_indoor.x = container_outdoor.x = 1080
+        container.rotation = 90;
+        container.x = 1080;
     }
 };adjust_screen();
 
