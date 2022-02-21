@@ -1,4 +1,5 @@
 var stage = new createjs.Stage("wrapper");
+createjs.Touch.enable(stage);
 var container = new createjs.Container();
 stage.addChild(container);
 var text = container.addChild(new createjs.Text("The Diaries of John Rabe", "150px Times", "#fff").set({x:190, y:470}));
@@ -55,7 +56,7 @@ function HandleComplete() {
         bg.removeEventListener("click", arguments.callee);
         createjs.Tween.get(container).to({alpha:0}, 1000).call(function(){
             container.removeChild(bg);
-            container.removeChild(text);
+            //container.removeChild(text);
             container.addChild(things[0]);
         }).to({alpha:1}, 1000);
     });
@@ -70,7 +71,7 @@ function HandleComplete() {
         container.removeChild(things[0]);
         container.removeChild(things[1]);
         container.removeChild(things[2]);
-        container.addChild(text);
+        //container.addChild(text);
         container.addChild(things[3]);
         }).to({alpha:1}, 1000);
     })
