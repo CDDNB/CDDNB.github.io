@@ -1,17 +1,3 @@
-var docElm = document.documentElement;
-if (docElm.requestFullscreen) {
-docElm.requestFullscreen();
-}
-else if (docElm.msRequestFullscreen) {
-docElm.msRequestFullscreen();
-}
-else if (docElm.mozRequestFullScreen) {
-docElm.mozRequestFullScreen();
-}
-else if (docElm.webkitRequestFullScreen) {
-docElm.webkitRequestFullScreen();
-}
-
 var stage = new createjs.Stage("wrapper");
 createjs.Touch.enable(stage);
 var container = new createjs.Container();
