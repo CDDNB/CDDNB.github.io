@@ -85,6 +85,7 @@ if (element.requestFullscreen) {
 } else if (element.msRequestFullscreen) {
     element.msRequestFullscreen();
 }
+            adjust_screen();
             container.removeChild(bg);
             container.removeChild(text);
             container.addChild(things[0]);
