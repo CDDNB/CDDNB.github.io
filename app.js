@@ -75,6 +75,16 @@ function HandleComplete() {
     bg.addEventListener("click", function() {
         bg.removeEventListener("click", arguments.callee);
         createjs.Tween.get(container).to({alpha:0}, 1000).call(function(){
+            var element = document.getElementById("main");
+if (element.requestFullscreen) {
+    element.requestFullscreen();
+} else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+} else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+} else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+}
             container.removeChild(bg);
             container.removeChild(text);
             container.addChild(things[0]);
