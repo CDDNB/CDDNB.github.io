@@ -1,3 +1,17 @@
+var docElm = document.documentElement;
+if (docElm.requestFullscreen) {
+docElm.requestFullscreen();
+}
+else if (docElm.msRequestFullscreen) {
+docElm.msRequestFullscreen();
+}
+else if (docElm.mozRequestFullScreen) {
+docElm.mozRequestFullScreen();
+}
+else if (docElm.webkitRequestFullScreen) {
+docElm.webkitRequestFullScreen();
+}
+
 var stage = new createjs.Stage("wrapper");
 createjs.Touch.enable(stage);
 var container = new createjs.Container();
@@ -6,11 +20,14 @@ var text = container.addChild(new createjs.Text("The Diaries of John Rabe", "150
 stage.update();
 createjs.Ticker.setFPS(30);
 createjs.Ticker.addEventListener("tick", stage);
+var screen = 1;
 function adjust_screen(){
     canvas = document.getElementById("wrapper");
     canvas.width = 1920
     canvas.height = 1080
-    if(document.documentElement.clientWidth == document.documentElement.clientHeight){
+    if(document.documentElement.clientWidth <= document.documentElement.clientHeight){
+        //alert("?");
+        screen = 0;
         //text.set({x:570, y:190, rotation:90});
         canvas.width = 1080;
         canvas.height = 1920;
@@ -34,7 +51,24 @@ var things = [];//ticket2 ticket1 letter letter1 letter2 sand , tele diary1 2 3
 var rects = [];//diary turn window
 var timer;
 var bg;
+var pressing = 0,pressx, pressy;
 function f(){};
+function calculateX(e) {
+    if(screen == 0) {
+        return e.stageY;
+    }
+    else {
+        return e.stageX;
+    }
+}
+function calculateY(e) {
+    if(screen == 0) {
+        return 1080 - e.stageX;
+    }
+    else {
+        return e.stageY;
+    }
+}
 
 var Queue = new createjs.LoadQueue();
 Queue.on("complete", HandleComplete, this);
@@ -56,7 +90,7 @@ function HandleComplete() {
         bg.removeEventListener("click", arguments.callee);
         createjs.Tween.get(container).to({alpha:0}, 1000).call(function(){
             container.removeChild(bg);
-            //container.removeChild(text);
+            container.removeChild(text);
             container.addChild(things[0]);
         }).to({alpha:1}, 1000);
     });
@@ -71,7 +105,7 @@ function HandleComplete() {
         container.removeChild(things[0]);
         container.removeChild(things[1]);
         container.removeChild(things[2]);
-        //container.addChild(text);
+        container.addChild(text);
         container.addChild(things[3]);
         }).to({alpha:1}, 1000);
     })
@@ -111,10 +145,6 @@ outdoor.onload = function() {
     bg.addEventListener("click", f);
     //container.addChild(bg);
 }*/
-
-container.addEventListener("click", function(event) {
-    console.log(stage.mouseX, stage.mouseY);
-})
 
 var queue = new createjs.LoadQueue();
 queue.on("complete", handleComplete, this);
@@ -273,8 +303,21 @@ function state3_end() {
     });
 }
 
+function press_start(e) {
+    pressx = e.x;
+    pressy = e.y;
+}
+
 function ticket1_move(e) {
-    things[1].set({x:e.stageX, y:e.stageY});
+    if(pressing == 0) {
+        pressx = 1080-things[1].y;
+        pressy = things[1].x;
+        pressing = 1;
+    }
+    else{
+        things[1].set({x: calculateX(e), y: calculateY(e)});
+    }
+    //things[1].set({x:e.stageX, y:e.stageY});
 }
 function ticket1_end() {
     if(things[8].x == 304 && things[1].x > 550 && things[1].x < 888 && things[1].y > 510 && things[1].y < 820) {
@@ -289,7 +332,15 @@ function ticket1_end() {
 }
 
 function ticket2_move(e) {
-    things[0].set({x:e.stageX, y:e.stageY});
+    if(pressing == 0) {
+        pressx = 1080-things[0].y;
+        pressy = things[0].x;
+        pressing = 1;
+    }
+    else{
+        things[0].set({x: calculateX(e), y: calculateY(e)});
+    }
+    //things[0].set({x:e.stageX, y:e.stageY});
 }
 function ticket2_end() {
     if(things[8].x == 304 && things[0].x > 1000 && things[0].x < 1350 && things[0].y > 450 && things[0].y < 820) {
@@ -359,6 +410,7 @@ function letterx_handler() {
 
 function sand_handler() {
     things[5].removeEventListener("click", arguments.callee);
+    //things[5].addEventListener("mousedown", press_start(e));
     things[5].addEventListener("pressmove", sand_move);
     things[5].addEventListener("pressup", sand_end);
     createjs.Tween.get(things[5]).to({x:1775, y:460, scaleX:0.15, scaleY:0.15}, 1000);
@@ -369,9 +421,17 @@ function sand_handler() {
 }*/
 
 function sand_move(e) {
-    things[5].set({x:e.stageX, y:e.stageY});
+    if(pressing == 0) {
+        pressx = 1080-things[5].y;
+        pressy = things[5].x;
+        pressing = 1;
+    }
+    else{
+        things[5].set({x: calculateX(e), y: calculateY(e)});
+    }
 }
 function sand_end() {
+    pressing = 0;
     if(things[6].alpha == 1 && things[5].x > 760 && things[5].x < 1250 && things[5].y > 620 && things[5].y < 720) {
         things[5].set({x:630, y:400, scaleX:0.7, scaleY:0.7});
     }
@@ -388,7 +448,15 @@ function tele_handler() {
 }
 
 function tele_move(e) {
-    things[7].set({x:e.stageX, y:e.stageY});
+    if(pressing == 0) {
+        pressx = 1080-things[7].y;
+        pressy = things[7].x;
+        pressing = 1;
+    }
+    else{
+        things[7].set({x: calculateX(e), y: calculateY(e)});
+    }
+    //things[7].set({x:e.stageX, y:e.stageY});
 }
 function tele_end() {
     if(state == 2 && things[7].x > 650 && things[7].x < 1350 && things[7].y < 350) {
