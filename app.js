@@ -259,8 +259,8 @@ function shelter_handler() {
 }
 
 function newspaper_handler() {
+    createjs.Sound.play("book_sound");
     if(things[11].x == 1490) {
-        createjs.Sound.play("book_sound");
         container.addChild(bg);
         container.removeChild(things[11]);
         container.addChild(things[11]);
