@@ -353,7 +353,7 @@ function ticket1_end() {
         }
     }
     else {
-        createjs.Tween.get(things[1]).to({x:50, y:200, scaleX:0.07, scaleY:0.07}, 200);
+        createjs.Tween.get(things[1]).to({x:50, y:170, scaleX:0.07, scaleY:0.07}, 200);
     }
 }
 
@@ -469,6 +469,7 @@ function sand_end() {
         things[5].set({x:630, y:400, scaleX:0.7, scaleY:0.7});
     }
     else {
+        createjs.Sound.play("bag_sound");
         createjs.Tween.get(things[5]).to({x:50, y:700, scaleX:0.2, scaleY:0.2}, 200);
     }
 }
@@ -494,6 +495,7 @@ function tele_move(e) {
 }
 function tele_end() {
     if(state == 2 && things[7].x > 650 && things[7].x < 1350 && things[7].y < 350) {
+        createjs.Sound.play("bag_sound");
         createjs.Sound.play("air_sound");
         container.addChild(things[12]);
         state = 3;
